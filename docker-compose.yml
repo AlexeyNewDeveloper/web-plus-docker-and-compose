@@ -1,0 +1,45 @@
+version: '1'
+name: 'kupi-podari-dai'
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    image: backend
+    env_file: .env
+    ports:
+      - '4000:3000'
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  frontend:
+    container_name: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    image: frontend
+    env_file: .env
+    ports:
+      - '8081:80'
+    restart: unless-stopped
+
+  postgres:
+    container_name: db
+    image: postgres:latest
+    env_file: .env
+    volumes:
+      - postgres_data:/volume
+    restart: unless-stopped
+    networks:
+      - backend
+
+volumes:
+  postgres_data:
+
+networks:
+  backend:
