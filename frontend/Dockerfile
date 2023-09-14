@@ -12,4 +12,4 @@ WORKDIR /app
 RUN rm -rf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build /usr/share/nginx/html
 COPY ./nginx/conf.d/default.conf /etc/nginx/conf.d
-CMD ['nginx', '-g','daemon off;' ]
+CMD ["nginx", "-g", "daemon off;" ]
